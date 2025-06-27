@@ -1,5 +1,5 @@
 @if (dataElements().length ===0) {
-<div class="loader"></div>
+<mat-spinner class="loader"></mat-spinner>
 } @else {
 <table mat-table [dataSource]="dataElements()">
   <ng-container matColumnDef="position">
