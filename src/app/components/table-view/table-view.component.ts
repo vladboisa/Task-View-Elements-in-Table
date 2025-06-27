@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { PeriodicElement } from './../../models/api.model';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DataSourceStore } from '../../store/data-source.service';
 
 @Component({
   selector: 'app-table-view',
@@ -9,4 +11,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './table-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableViewComponent {}
+export class TableViewComponent {
+  private dataSource = inject(DataSourceStore);
+
+  dataElements!: PeriodicElement[];
+
+  ngOnInit() {
+    this.dataElements = this.dataSource.loadDataElements();
+  }
+}
