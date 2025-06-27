@@ -14,9 +14,9 @@ import { DataSourceStore } from '../../store/data-source.service';
 export class TableViewComponent {
   private dataSource = inject(DataSourceStore);
 
-  dataElements!: PeriodicElement[];
+  dataElements = this.dataSource.computedDataElements;
 
   ngOnInit() {
-    this.dataElements = this.dataSource.loadDataElements();
+    this.dataSource.loadDataElements();
   }
 }

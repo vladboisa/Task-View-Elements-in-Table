@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { PeriodicElement } from '../models/api.model';
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -18,10 +18,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
   providedIn: 'root',
 })
 export class DataSourceStore {
-  private dataElements = signal<PeriodicElement[]>([]);
+  private storeDataElements = signal<PeriodicElement[]>([]);
+
+  readonly computedDataElements = computed(() => this.storeDataElements());
 
   loadDataElements() {
-    setTimeout(() => this.dataElements.set(ELEMENT_DATA), 1000);
-    return this.dataElements();
+    setTimeout(() => this.storeDataElements.set(ELEMENT_DATA), 1500);
   }
 }
