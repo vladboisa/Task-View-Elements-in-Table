@@ -1,6 +1,11 @@
 @if (dataElements().length ===0) {
 <mat-spinner class="loader"></mat-spinner>
 } @else {
+<mat-form-field class="w-full">
+  <mat-label>Filter</mat-label>
+  <input matInput [formControl]="filterInputControl" placeholder="Type to filter...">
+</mat-form-field>
+<hr>
 <table mat-table [dataSource]="dataElements()">
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef> No. </th>
