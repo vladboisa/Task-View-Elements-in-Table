@@ -47,4 +47,7 @@ export class TableViewComponent {
         this.dataSource.setFilterQuery(value ? value : '');
       });
   }
+  openEditDialog(element: any) {
+    console.log(element);
+  }
 }

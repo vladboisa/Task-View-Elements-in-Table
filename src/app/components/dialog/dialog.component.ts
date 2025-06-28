@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { PeriodicElement } from '../../models/api.model';
 
 @Component({
   selector: 'app-dialog',
@@ -7,4 +14,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Dialog {}
+export class Dialog {
+  @Input() element!: PeriodicElement;
+  @Output() updated = new EventEmitter<PeriodicElement>();
+
+  emitUpdate() {
+    this.updated.emit(this.element);
+  }
+}
