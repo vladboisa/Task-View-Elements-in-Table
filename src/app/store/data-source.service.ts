@@ -20,9 +20,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DataSourceStore {
   private storeDataElements = signal<PeriodicElement[]>([]);
   private filterQuery = signal<string>('');
+  private loading = signal<boolean>(true);
 
   readonly computedDataElements = computed(() => this.storeDataElements());
-
+  readonly isLoading = computed(() => this.loading());
   readonly filteredDataElements = computed(() => {
     const lowerCaseQuery = this.filterQuery().toLowerCase();
     if (!lowerCaseQuery) return this.computedDataElements();
@@ -34,9 +35,16 @@ export class DataSourceStore {
     );
   });
   loadDataElements() {
-    setTimeout(() => this.storeDataElements.set(ELEMENT_DATA), 1500);
+    this.setLoadingState(true);
+    setTimeout(() => {
+      this.storeDataElements.set(ELEMENT_DATA);
+      this.setLoadingState(false);
+    }, 1500);
   }
   setFilterQuery(query: string) {
     this.filterQuery.set(query);
+  }
+  setLoadingState(value: boolean) {
+    this.loading.set(value);
   }
 }

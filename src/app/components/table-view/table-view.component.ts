@@ -35,7 +35,7 @@ export class TableViewComponent {
   dataElements = this.dataSource.filteredDataElements;
 
   filterInputControl = new FormControl('');
-
+  isLoading = this.dataSource.isLoading;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 
   ngOnInit() {
