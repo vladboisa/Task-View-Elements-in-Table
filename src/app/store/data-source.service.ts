@@ -47,4 +47,11 @@ export class DataSourceStore {
   setLoadingState(value: boolean) {
     this.loading.set(value);
   }
+  updateElement(updated: PeriodicElement) {
+    const current = this.storeDataElements();
+    const updatedData = current.map((currentEl) =>
+      currentEl.position === updated.position ? updated : currentEl
+    );
+    this.storeDataElements.set(updatedData);
+  }
 }

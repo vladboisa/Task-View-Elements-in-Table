@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataSourceStore } from '../../store/data-source.service';
 import { MatTableModule } from '@angular/material/table';
@@ -13,6 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { PeriodicElement } from '../../models/api.model';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-table-view',
@@ -31,6 +29,7 @@ import { distinctUntilChanged } from 'rxjs';
 })
 export class TableViewComponent {
   private dataSource = inject(DataSourceStore);
+  private dialog = inject(MatDialog);
 
   dataElements = this.dataSource.filteredDataElements;
 
@@ -47,7 +46,14 @@ export class TableViewComponent {
         this.dataSource.setFilterQuery(value ? value : '');
       });
   }
-  openEditDialog(element: any) {
-    console.log(element);
+  openEditDialog(element: PeriodicElement) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { element },
+    });
+    dialogRef.afterClosed().subscribe((updatedElement: PeriodicElement) => {
+      if (updatedElement) {
+        this.dataSource.updateElement(updatedElement);
+      }
+    });
   }
 }
