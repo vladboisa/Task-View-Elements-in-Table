@@ -22,12 +22,15 @@ export class DataSourceStore {
   private filterQuery = signal<string>('');
 
   readonly computedDataElements = computed(() => this.storeDataElements());
+
   readonly filteredDataElements = computed(() => {
     const lowerCaseQuery = this.filterQuery().toLowerCase();
-    if (!lowerCaseQuery) return this.storeDataElements();
+    if (!lowerCaseQuery) return this.computedDataElements();
 
-    return this.storeDataElements().filter((el) =>
-      Object.values(el).join(' ').toLowerCase().includes(lowerCaseQuery)
+    return this.computedDataElements().filter((el) =>
+      Object.values(el).some((val) =>
+        val.toString().toLowerCase().includes(lowerCaseQuery)
+      )
     );
   });
   loadDataElements() {

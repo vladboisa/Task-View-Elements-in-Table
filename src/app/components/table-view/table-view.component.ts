@@ -7,13 +7,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { DataSourceStore } from '../../store/data-source.service';
 import { MatTableModule } from '@angular/material/table';
-import {
-  MatProgressSpinnerModule,
-} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-table-view',
@@ -33,8 +32,8 @@ import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 export class TableViewComponent {
   private dataSource = inject(DataSourceStore);
 
-  dataElements = this.dataSource.computedDataElements;
-  filteredDataElements = signal(this.dataSource.computedDataElements());
+  dataElements = this.dataSource.filteredDataElements;
+
   filterInputControl = new FormControl('');
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
@@ -43,7 +42,7 @@ export class TableViewComponent {
     this.dataSource.loadDataElements();
 
     this.filterInputControl.valueChanges
-      .pipe(debounceTime(2000))
+      .pipe(debounceTime(2000), distinctUntilChanged())
       .subscribe((value) => {
         this.dataSource.setFilterQuery(value ? value : '');
       });
