@@ -1,6 +1,9 @@
 <mat-form-field class="w-full">
   <mat-label>Filter</mat-label>
   <input matInput [formControl]="filterInputControl" placeholder="Type to filter...">
+  <button *ngIf="filterInputControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearFilter()">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-form-field>
 <hr>
 @if (isLoading()){

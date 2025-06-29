@@ -32,7 +32,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class TableViewComponent {
   private dataSource = inject(DataSourceStore);
   private dialog = inject(MatDialog);
-
   readonly dataElements = this.dataSource.filteredDataElements;
   readonly isLoading = this.dataSource.isLoading;
   readonly displayedColumns: string[] = [
@@ -51,6 +50,10 @@ export class TableViewComponent {
       .subscribe((value) => {
         this.dataSource.setFilterQuery(value ? value : '');
       });
+  }
+  clearFilter() {
+    this.filterInputControl.setValue('');
+    this.dataSource.setFilterQuery('');
   }
   openEditDialog(element: PeriodicElement) {
     const dialogRef = this.dialog.open(DialogComponent, {
