@@ -39,8 +39,6 @@ export class DialogComponent {
   private fb = inject(FormBuilder);
   readonly form: FormGroup;
 
-  @Output() updated = new EventEmitter<PeriodicElement>();
-
   constructor() {
     const data = inject(MAT_DIALOG_DATA);
     this.form = this.fb.group({
@@ -49,11 +47,6 @@ export class DialogComponent {
       weight: [data.element.weight, Validators.required],
       symbol: [data.element.symbol, Validators.required],
     });
-  }
-
-  emitUpdate() {
-    const updatedElement: PeriodicElement = this.form.value;
-    this.updated.emit(updatedElement);
   }
 
   onSubmit() {
