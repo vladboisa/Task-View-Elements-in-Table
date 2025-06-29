@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PeriodicElement } from '../../models/api.model';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-table-view',
@@ -24,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
   templateUrl: './table-view.component.html',
   styleUrl: './table-view.component.scss',
@@ -32,6 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class TableViewComponent {
   private dataSource = inject(DataSourceStore);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
   readonly dataElements = this.dataSource.filteredDataElements;
   readonly isLoading = this.dataSource.isLoading;
   readonly displayedColumns: string[] = [
@@ -62,6 +65,11 @@ export class TableViewComponent {
     dialogRef.afterClosed().subscribe((updatedElement: PeriodicElement) => {
       if (updatedElement) {
         this.dataSource.updateElement(updatedElement);
+        this.snackBar.open('Record updated!', 'Close', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
       }
     });
   }
