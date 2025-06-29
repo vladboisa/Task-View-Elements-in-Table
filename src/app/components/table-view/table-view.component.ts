@@ -11,6 +11,7 @@ import { distinctUntilChanged } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PeriodicElement } from '../../models/api.model';
 import { DialogComponent } from '../dialog/dialog.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-table-view',
@@ -22,6 +23,7 @@ import { DialogComponent } from '../dialog/dialog.component';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
   templateUrl: './table-view.component.html',
   styleUrl: './table-view.component.scss',
