@@ -33,11 +33,15 @@ export class TableViewComponent {
   private dataSource = inject(DataSourceStore);
   private dialog = inject(MatDialog);
 
-  dataElements = this.dataSource.filteredDataElements;
-
-  filterInputControl = new FormControl('');
-  isLoading = this.dataSource.isLoading;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  readonly dataElements = this.dataSource.filteredDataElements;
+  readonly isLoading = this.dataSource.isLoading;
+  readonly displayedColumns: string[] = [
+    'position',
+    'name',
+    'weight',
+    'symbol',
+  ];
+  readonly filterInputControl = new FormControl('');
 
   ngOnInit() {
     this.dataSource.loadDataElements();
