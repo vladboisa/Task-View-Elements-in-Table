@@ -1,16 +1,16 @@
-@if (isLoading()) {
-<mat-spinner class="loader"></mat-spinner>
-} @else {
 <mat-form-field class="w-full">
   <mat-label>Filter</mat-label>
   <input matInput [formControl]="filterInputControl" placeholder="Type to filter...">
 </mat-form-field>
 <hr>
+@if (isLoading()){
+<mat-spinner class="loader"></mat-spinner>
+} @else {
 <table mat-table [dataSource]="dataElements()">
   <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <th mat-header-cell *matHeaderCellDef> Number. </th>
     <td mat-cell *matCellDef="let element"> {{element.position}}
-      <button mat-button (click)="openEditDialog(element)">Edit</button>
+      <button (click)="openEditDialog(element)"><mat-icon fontIcon="edit"></mat-icon></button>
     </td>
   </ng-container>
   <ng-container matColumnDef="name">
